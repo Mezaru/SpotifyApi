@@ -1,0 +1,22 @@
+﻿@model HomeAboutVM
+
+
+
+
+
+@foreach (var item in Model.Search.Artists.Items)
+{
+    <h1>@item.Name</h1>
+    <h3>@item.Popularity</h3>
+    <h3>@item.Type</h3>
+    <ul>
+        @foreach (var genres in item.Genres)
+        {
+            <li>@genres</li>
+        }
+    </ul>
+    @foreach (var images in item.Images)
+    {
+        <img style="width: 200px" src="@images.Url" />
+    }
+}

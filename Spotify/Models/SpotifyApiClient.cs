@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Flurl;
 using Microsoft.Extensions.Caching.Memory;
+using System.Linq;
 
 namespace Spotify.Models
 {
@@ -47,12 +48,29 @@ namespace Spotify.Models
             var artistResponse = JsonConvert.DeserializeObject<SearchArtistResponse>(response);
             return artistResponse;
         }
-        
-        public async Task<SearchTrackCollection> Search (IMemoryCache cache, int? limit = 1, int? offset = null)
+
+        public async Task<SearchTrackResponce> Search(IMemoryCache cache, SearchParameters parameters, int? limit = null, int? offset = null)
         {
+            SearchArtistResponse artist = null;
+
             var client = GetDefaultClient(cache);
             var url = new Url("/v1/recommendations");
-            url = url.SetQueryParam("seed_genres", "rock");
+            if (parameters.Genre != null)
+                url = url.SetQueryParam("seed_genres", parameters.Genre);
+
+            if (parameters.Type != null)
+                url = url.SetQueryParam("type", parameters.Type);
+
+            if (parameters.Popularity != null)
+                url = url.SetQueryParam("target_popularity", parameters.Popularity);
+
+            if (artist != null)
+            {
+                artist = await SearchArtistsAsync(parameters.Text, cache, 1);
+                url = url.SetQueryParam("target_", artist.Artists.Items.First().Id);
+            }
+            if (parameters.Valence != null)
+                url = url.SetQueryParam("target_valence", parameters.Valence);
 
             if (limit != null)
                 url = url.SetQueryParam("limit", limit);
@@ -62,7 +80,7 @@ namespace Spotify.Models
 
             var response = await client.GetStringAsync(url);
 
-            var artistResponse = JsonConvert.DeserializeObject<SearchTrackCollection>(response);
+            var artistResponse = JsonConvert.DeserializeObject<SearchTrackResponce>(response);
             return artistResponse;
         }
     }

@@ -4,19 +4,18 @@
 
 
 
-@foreach (var item in Model.Search.Artists.Items)
+@foreach (var item in Model.Search.Tracks)
 {
     <h1>@item.Name</h1>
     <h3>@item.Popularity</h3>
     <h3>@item.Type</h3>
-    <ul>
-        @foreach (var genres in item.Genres)
-        {
-            <li>@genres</li>
-        }
-    </ul>
-    @foreach (var images in item.Images)
+    <h1>@item.Album.Type</h1>
+    <img src="@item.Album.Images.First().Url" />
+    <h1></h1>
+    @*<img style="width: 200px" src="@item.Images.First().Url" />*@
+
+    @*@foreach (var images in item.Images)
     {
         <img style="width: 200px" src="@images.Url" />
-    }
+    }*@
 }

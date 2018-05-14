@@ -14,12 +14,65 @@ namespace Spotify.Models
     public class SearchTrackResponce
     {
         [JsonProperty("tracks")]
-        public SearchTrackCollection Tracks { get; set; }
+        public List<SearchTrackCollection>Tracks { get; set; }
     }
 
     public class SearchTrackCollection
     {
+        [JsonProperty("album")]
+        public Album Album { get; set; }
+
+        [JsonProperty("artists")]
         public List<Artist> Artists { get; set; }
+
+        [JsonProperty("external_urls")]
+        public ExternalUrls ExternalUrls { get; set; }
+
+        [JsonProperty("href")]
+        public string Href { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("uri")]
+        public string Uri { get; set; }
+
+        [JsonProperty("popularity")]
+        public int Popularity { get; set; }
+    }
+
+    public class Album
+    {
+        [JsonProperty("artists")]
+        List<Artist> Artists { get; set; }
+
+        [JsonProperty("external_urls")]
+        public ExternalUrls ExternalUrls { get; set; }
+
+        [JsonProperty("href")]
+        public string Href { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("images")]
+        public IList<Image> Images { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("uri")]
+        public string Uri { get; set; }
+
     }
 
     public class SearchArtistCollection

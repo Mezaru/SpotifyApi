@@ -34,7 +34,7 @@ namespace Spotify.Controllers
         public async Task<IActionResult> Index(HomeIndexVM model)
         {
             //var response = await repository.SearchArtistsAsync(model.SearchResult, cache);
-            var response = await repository.Search(cache);
+            var response = await repository.Search(cache, model.SearchParameters);
 
             //if (response.Artists.Items.Count() == 0)
             //    return View();
@@ -46,7 +46,7 @@ namespace Spotify.Controllers
         [HttpGet]
         public IActionResult About()
         {
-            var searchResult = JsonConvert.DeserializeObject<SearchArtistResponse>(HttpContext.Session.GetString("test"));
+            var searchResult = JsonConvert.DeserializeObject<SearchTrackResponce>(HttpContext.Session.GetString("test"));
             return View(new HomeAboutVM { Search = searchResult });
         }
     }

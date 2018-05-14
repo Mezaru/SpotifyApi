@@ -7,6 +7,6 @@ namespace Spotify.Models.ViewModels
 {
     public class HomeAboutVM
     {
-        public SearchArtistResponse Search { get; set; }
+        public SearchTrackResponce Search { get; set; }
     }
 }

@@ -147,4 +147,14 @@ namespace Spotify.Models
         [JsonProperty("width")]
         public int Width { get; set; }
     }
+    public class GenreResponse
+    {
+        [JsonProperty("genres")]
+        public List<string> Genres { get; set; }
+    }
+
+    public class Genre
+    {
+        public string Genres { get; set; }
+    }
 }

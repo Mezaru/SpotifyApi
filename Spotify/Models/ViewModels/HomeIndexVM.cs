@@ -8,6 +8,7 @@ namespace Spotify.Models.ViewModels
     public class HomeIndexVM
     {
         public SearchParameters SearchParameters { get; set; }
+        public GenreResponse GenreSeed { get; set; }
     }
     
 }

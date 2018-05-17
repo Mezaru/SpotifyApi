@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Flurl;
 using Microsoft.Extensions.Caching.Memory;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Spotify.Models
 {
@@ -27,6 +28,19 @@ namespace Spotify.Models
             };
 
             return client;
+        }
+
+        internal async Task<GenreResponse> GetAvailableGenreSeeds(IMemoryCache cache)
+        {
+            var client = GetDefaultClient(cache);
+            var url = new Url("/v1/recommendations/available-genre-seeds");
+
+            var response = await client.GetStringAsync(url);
+            var genreResponse = JsonConvert.DeserializeObject<GenreResponse>(response);
+
+
+            return genreResponse;
+
         }
 
         public async Task<SearchArtistResponse> SearchArtistsAsync(string artistName, IMemoryCache cache, int? limit = null, int? offset = null)
@@ -58,16 +72,13 @@ namespace Spotify.Models
             if (parameters.Genre != null)
                 url = url.SetQueryParam("seed_genres", parameters.Genre);
 
-            if (parameters.Type != null)
-                url = url.SetQueryParam("type", parameters.Type);
-
             if (parameters.Popularity != null)
                 url = url.SetQueryParam("target_popularity", parameters.Popularity);
 
-            if (artist != null)
+            if (parameters.Text != null)
             {
                 artist = await SearchArtistsAsync(parameters.Text, cache, 1);
-                url = url.SetQueryParam("target_", artist.Artists.Items.First().Id);
+                url = url.SetQueryParam("seed_artists", artist.Artists.Items.First().Id);
             }
             if (parameters.Valence != null)
                 url = url.SetQueryParam("target_valence", parameters.Valence);

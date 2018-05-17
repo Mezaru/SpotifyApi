@@ -25,9 +25,10 @@ namespace Spotify.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+
+            return View(new HomeIndexVM { GenreSeed = await repository.GetAvailableGenreSeeds(cache) });
         }
 
         [HttpPost]
@@ -36,17 +37,14 @@ namespace Spotify.Controllers
             //var response = await repository.SearchArtistsAsync(model.SearchResult, cache);
             var response = await repository.Search(cache, model.SearchParameters);
 
-            //if (response.Artists.Items.Count() == 0)
-            //    return View();
-            HttpContext.Session.SetString("test", JsonConvert.SerializeObject(response));
+            HttpContext.Session.SetString("session", JsonConvert.SerializeObject(response));
             return RedirectToAction(nameof(About));
-
         }
 
         [HttpGet]
         public IActionResult About()
         {
-            var searchResult = JsonConvert.DeserializeObject<SearchTrackResponce>(HttpContext.Session.GetString("test"));
+            var searchResult = JsonConvert.DeserializeObject<SearchTrackResponce>(HttpContext.Session.GetString("session"));
             return View(new HomeAboutVM { Search = searchResult });
         }
     }

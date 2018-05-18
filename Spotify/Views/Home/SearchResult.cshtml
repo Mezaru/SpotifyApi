@@ -1,0 +1,40 @@
+﻿@model HomeAboutVM
+
+
+<style>
+    .content {
+        margin-bottom: 20px;
+    }
+
+    .content img {
+        height: 200px;
+        width: 200px;
+    }
+
+    .content h1 {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    .content h3 {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+</style>
+
+<h1 style="text-decoration: underline">Recommend for you</h1>
+<div style="display:grid; grid-template-columns: 33.3% 33.3% 33.3%">
+    @foreach (var item in Model.Search.Tracks)
+    {
+        <div class="content">
+            <img src="@item.Album.Images.First().Url" />
+            <h1>@item.Name</h1>
+            <h3>By:</h3>
+            @foreach (var artist in item.Artists)
+            {
+                <h1>@artist.Name</h1>
+            }
+            <h3>Popularity: @item.Popularity</h3>
+        </div>
+    }
+</div>

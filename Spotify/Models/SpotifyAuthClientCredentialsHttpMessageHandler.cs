@@ -39,7 +39,6 @@ namespace Spotify.Models
         {
             var cacheKey = "SpotifyWebApiSession-Token" + _clientId;
             var token = (string)cache.Get(cacheKey);
-            //var token = MemoryCache.Default.Get(cacheKey) as string;
 
             if (token == null)
             {
@@ -65,7 +64,6 @@ namespace Spotify.Models
             var content = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "client_credentials")
-                //new KeyValuePair<string, string>("scope", "")
             });
 
             var authHeader = BuildAuthHeader();

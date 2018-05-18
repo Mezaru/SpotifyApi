@@ -27,22 +27,29 @@ namespace Spotify.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-
-            return View(new HomeIndexVM { GenreSeed = await repository.GetAvailableGenreSeeds(cache) });
+            var seeds = await repository.GetAvailableGenreSeeds(cache);
+            HttpContext.Session.SetString("seeds", JsonConvert.SerializeObject(seeds));
+            return View(new HomeIndexVM { GenreSeed = seeds });
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(HomeIndexVM model)
         {
-            //var response = await repository.SearchArtistsAsync(model.SearchResult, cache);
-            var response = await repository.Search(cache, model.SearchParameters);
+            if (model.SearchParameters.Text == null && model.SearchParameters.Genre == null ||( model.SearchParameters.Genre != null ? model.SearchParameters.Genre.Count > 4 : false ))
+            {
+                var seeds = JsonConvert.DeserializeObject<GenreResponse>(HttpContext.Session.GetString("seeds"));
+                model.GenreSeed = seeds;
+                return View(model);
+            }
 
-            HttpContext.Session.SetString("session", JsonConvert.SerializeObject(response));
-            return RedirectToAction(nameof(About));
+            var response = await repository.Search(cache, model.SearchParameters, 99);
+
+            HttpContext.Session.SetString("session", response);
+            return RedirectToAction(nameof(SearchResult));
         }
 
         [HttpGet]
-        public IActionResult About()
+        public IActionResult SearchResult()
         {
             var searchResult = JsonConvert.DeserializeObject<SearchTrackResponce>(HttpContext.Session.GetString("session"));
             return View(new HomeAboutVM { Search = searchResult });

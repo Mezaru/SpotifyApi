@@ -1,15 +1,29 @@
 ﻿<!DOCTYPE html>
 
+<style>
+    a{
+        text-decoration: none;
+        cursor:default;
+    }
+</style>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
 </head>
-<body>
-    <div style="text-align:center">
-        <h1>Spotify Search</h1>
-        <hr />
-        @RenderBody()
+<body style="background-color: #1DB954; color:#191414">
+    <div style="width: 70%; margin:auto">
+        <div style="text-align:center;">
+            <a href="/" >
+                <div style=" background-color: #191414; color: #FFFFFF; padding: 10px; display: flex; justify-content: center; border-radius: 30px; margin: auto; margin-bottom: 2em; text-decoration: none">
+                    <img style="height: 100px" src="~/Img/Spotify_Logo_RGB_Green.png" />
+                    <h1 style="font-size: 8rem; margin-bottom:unset">Search</h1>
+                </div>
+            </a>
+            @RenderBody()
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

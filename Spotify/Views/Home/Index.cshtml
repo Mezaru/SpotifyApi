@@ -1,8 +1,24 @@
 ﻿@model HomeIndexVM
 
-<form asp-controller="Home" asp-action="Index" style="width: 30%; margin:auto; display:flex; flex-direction:column;">
+<style>
+    h3 {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    p {
+        margin-bottom: 0px;
+    }
+</style>
+
+<form asp-controller="Home" asp-action="Index" style="width: 40%; display:flex; flex-direction:column;background: rgba(0, 0, 0, 0.15); border-radius: 30px; padding: 30%; padding-top:1em; padding-bottom: 1em">
+    <div style="position:absolute; left: 17%; margin-top: 2em; width: 17%">
+        <p>Search by name of atrist or by selecting 1-4 genre</p>
+        <br />
+        <p>Popularity and mood is optional</p>
+    </div>
     <h3>Search by artist</h3>
-    <input asp-for="SearchParameters.Text" style="width: 50%; margin:auto" />
+    <input asp-for="SearchParameters.Text" style="width: 100%; margin:auto; margin-bottom: 2em" />
     <div style="display:inline-flex; height:fit-content; margin-bottom:1em;">
         <div>
             <h3>Pick genre (choice up to 4)</h3>
@@ -14,20 +30,21 @@
                 }
             </select>
         </div>
-        <div style="width:50%">
+        <div style="width:50%; margin-left: 1em">
             <h3>Popularity</h3>
             <p>value 0-100</p>
             <input asp-for="SearchParameters.Popularity" type="number" min="0" max="100" />
             <div>
+                <input onchange="EnableValence()" type="checkbox" style="position: absolute; display:flex; margin-top: 0.5%; margin-left: 2.5%">
                 <h3>Mood</h3>
-                <div style="display:flex; justify-content: space-around;">
+                <div style="display:flex; justify-content: space-between;">
                     <span>sad</span>
                     <span>happy</span>
                 </div>
-                <input asp-for="SearchParameters.Valence" type="range" min="0,0" max="1,0" value="0,5" class="slider" id="myRange">
+                <input asp-for="SearchParameters.Valence" type="range" id="Valence" min="0" max="100" value="50" disabled style="opacity: 0.5">
             </div>
         </div>
     </div>
-    <input style="width:50%; margin:auto" type="submit" value="Search" />
+    <input style="width: 100%; background: #ffffff; margin: auto; border-color: #1db954; color: #191414;" type="submit" value="Search" />
 </form>
 
